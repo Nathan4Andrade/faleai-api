@@ -20,11 +20,11 @@ app.set("trust proxy", true);
 app
   .use(cors())
   .use(express.json())
-  .get("/api/health", (_req, res) => res.send("OK!"))
-  .use("/api/auth", authenticationRouter)
-  .use("/api/bitrix-platform", bitrixPlatformRouter)
-  .use("/api/user", userRouter)
-  .use("/api/chatbot", chatbotRouter)
+  .get("/health", (_req, res) => res.send("OK!"))
+  .use("/auth", authenticationRouter)
+  .use("/bitrix-platform", bitrixPlatformRouter)
+  .use("/user", userRouter)
+  .use("/chatbot", chatbotRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
