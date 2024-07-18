@@ -8,11 +8,25 @@ async function createUser(data: Prisma.UserCreateInput) {
 }
 
 async function findUserById(userId: number) {
-  return prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       id: userId,
     },
+    include: {
+      BitrixPlatform: true,
+      Chatbot: true,
+    },
   });
+
+  if (user) {
+    return {
+      ...user,
+      bitrixPlatform: user.BitrixPlatform,
+      chatbot: user.Chatbot,
+    };
+  }
+
+  return null;
 }
 
 async function deleteUser(userId: number) {

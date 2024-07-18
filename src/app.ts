@@ -3,9 +3,13 @@ import "express-async-errors";
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import { handleApplicationErrors } from "@/middlewares";
-import { chatbotRouter } from "@/routes";
+import {
+  authenticationRouter,
+  bitrixPlatformRouter,
+  chatbotRouter,
+  userRouter,
+} from "@/routes";
 import { loadEnv, connectDb, disconnectDB } from "@/config";
-import { bitrixPlatformRouter } from "./routers/bitrixPlatform-router";
 
 loadEnv();
 
@@ -15,11 +19,12 @@ app.set("trust proxy", true);
 
 app
   .use(cors())
-
   .use(express.json())
-  .get("/health", (_req, res) => res.send("OK!"))
+  .get("/api/health", (_req, res) => res.send("OK!"))
+  .use("/api/auth", authenticationRouter)
+  .use("/api/bitrix-platform", bitrixPlatformRouter)
+  .use("/api/user", userRouter)
   .use("/api/chatbot", chatbotRouter)
-
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

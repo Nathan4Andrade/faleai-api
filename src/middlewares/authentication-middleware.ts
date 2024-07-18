@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { unauthorizedError } from "@/errors";
 import { authenticationRepository, userRepository } from "@/repositories";
+import dayjs from "dayjs";
 
 export async function authenticateToken(
   req: AuthenticatedRequest,
@@ -22,16 +23,11 @@ export async function authenticateToken(
   const user = await userRepository.findUserById(userId);
 
   req.userId = user.id;
-
   next();
 }
 
-export type AuthenticatedRequest = Request & JWTPayload & RolePayload;
+export type AuthenticatedRequest = Request & JWTPayload;
 
 type JWTPayload = {
   userId: number;
-};
-
-type RolePayload = {
-  role: string;
 };
