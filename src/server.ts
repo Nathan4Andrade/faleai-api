@@ -3,14 +3,14 @@ import http from "http";
 import fs from "fs";
 import app, { init } from "@/app";
 
-const port = +process.env.PORT || 4000;
+const port = +process.env.PORT || 3000;
 
 // Configurações para ambiente de produção (SSL)
 if (process.env.NODE_ENV === "production") {
   console.log("Server is running in production mode.");
   const sslOptions = {
-    key: fs.readFileSync("/var/www/html/ponto/apps.falefacilvoip.com.br.key"),
-    cert: fs.readFileSync("/var/www/html/ponto/apps.falefacilvoip.com.br.crt"),
+    key: fs.readFileSync("/var/www/html/faleai/apps.falefacilvoip.com.br.key"),
+    cert: fs.readFileSync("/var/www/html/faleai/apps.falefacilvoip.com.br.crt"),
   };
 
   init().then(() => {
